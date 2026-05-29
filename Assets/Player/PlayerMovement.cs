@@ -9,6 +9,11 @@ public class PlayerMovement : NetworkBehaviour
     public float crouchSpeed = 2.5f;
     public float jumpForce = 6f;
 
+    [Header("Look Settings")]
+    public float mouseSensitivity = 0.1f;
+    public Camera playerCamera; // Nasza kamera wewnątrz prefaba
+    private float verticalLookRotation = 0f;
+
     [Header("Animation")]
     public Animator animator;
     private float currentAnimationSpeed = 0f;
@@ -23,18 +28,40 @@ public class PlayerMovement : NetworkBehaviour
     private bool isCrouching;
     private float defaultColliderHeight;
     private float defaultColliderCenterY;
+    private float crouchColliderHeight;
+    private float crouchColliderCenterY;
+
+    // Pozycje kamery
+    private float cameraDefaultHeight;
+    private float cameraCrouchHeight;
 
     public override void OnNetworkSpawn()
     {
         if (IsOwner)
         {
-            if (Camera.main != null)
+            // Jako właściciel - mamy widok z tej kamery i ukrywamy kursor
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+
+            if (playerCamera != null)
             {
-                var cameraFollow = Camera.main.gameObject.GetComponent<IsometricCameraFollow>();
-                if (cameraFollow == null)
-                    cameraFollow = Camera.main.gameObject.AddComponent<IsometricCameraFollow>();
-                
-                cameraFollow.target = this.transform;
+                playerCamera.gameObject.SetActive(true);
+            }
+
+            // Ukrywamy własne ciało przed naszą kamerą (aby nie zasłaniało widoku),
+            // ale zostawiamy rzucanie cieni! Inni gracze będą widzieć nas normalnie.
+            Renderer[] renderers = GetComponentsInChildren<Renderer>();
+            foreach (Renderer r in renderers)
+            {
+                r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+            }
+        }
+        else
+        {
+            // Z wyłączamy kamerę u "klonów" innych graczy, by nie przejmowały ekranu
+            if (playerCamera != null)
+            {
+                playerCamera.gameObject.SetActive(false);
             }
         }
     }
@@ -49,6 +76,17 @@ public class PlayerMovement : NetworkBehaviour
         {
             defaultColliderHeight = capsuleCollider.height;
             defaultColliderCenterY = capsuleCollider.center.y;
+            
+            crouchColliderHeight = defaultColliderHeight / 2f;
+            crouchColliderCenterY = defaultColliderCenterY - (defaultColliderHeight / 4f);
+        }
+
+        // Zapisujemy pozycję startową kamery jako default, abyś mógł ją ustawić w Edytorze tak jak Ci wygodnie
+        if (playerCamera != null)
+        {
+            cameraDefaultHeight = playerCamera.transform.localPosition.y;
+            // Podczas kucania opuszczamy kamerę o połowę różnicy wysokości kolajdera
+            cameraCrouchHeight = cameraDefaultHeight - (crouchColliderHeight / 2f);
         }
         
         if (animator == null)
@@ -61,19 +99,36 @@ public class PlayerMovement : NetworkBehaviour
     {
         if (!IsOwner) return;
 
-        // Dynamiczne znajdowanie najniższego punktu gracza, niezależnie od tego gdzie jest środek (Pivot)
         Vector3 bottomPoint = transform.position;
         if (capsuleCollider != null)
         {
             bottomPoint = new Vector3(capsuleCollider.bounds.center.x, capsuleCollider.bounds.min.y, capsuleCollider.bounds.center.z);
         }
 
-        // Rzucamy promień ze środka stóp w dół
         isGrounded = Physics.Raycast(bottomPoint + Vector3.up * 0.1f, Vector3.down, 0.25f);
 
+        HandleLook();
         HandleInput();
         HandleCrouch();
         HandleAnimation();
+    }
+
+    private void HandleLook()
+    {
+        if (Mouse.current != null)
+        {
+            Vector2 mouseDelta = Mouse.current.delta.ReadValue();
+
+            transform.Rotate(Vector3.up * mouseDelta.x * mouseSensitivity);
+
+            verticalLookRotation -= mouseDelta.y * mouseSensitivity;
+            verticalLookRotation = Mathf.Clamp(verticalLookRotation, -85f, 85f);
+
+            if (playerCamera != null)
+            {
+                playerCamera.transform.localEulerAngles = new Vector3(verticalLookRotation, 0f, 0f);
+            }
+        }
     }
 
     private void HandleInput()
@@ -83,20 +138,16 @@ public class PlayerMovement : NetworkBehaviour
 
         if (Keyboard.current != null)
         {
-            // Poruszanie się
             if (Keyboard.current.wKey.isPressed || Keyboard.current.upArrowKey.isPressed) moveZ += 1f;
             if (Keyboard.current.sKey.isPressed || Keyboard.current.downArrowKey.isPressed) moveZ -= 1f;
             if (Keyboard.current.aKey.isPressed || Keyboard.current.leftArrowKey.isPressed) moveX -= 1f;
             if (Keyboard.current.dKey.isPressed || Keyboard.current.rightArrowKey.isPressed) moveX += 1f;
 
-            // Skakanie
             if (Keyboard.current.spaceKey.wasPressedThisFrame && isGrounded)
             {
                 rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-                // Usunięto wywoływanie animacji skoku
             }
 
-            // Kucanie (lewy Ctrl lub C)
             isCrouching = Keyboard.current.ctrlKey.isPressed || Keyboard.current.cKey.isPressed;
         }
 
@@ -105,21 +156,7 @@ public class PlayerMovement : NetworkBehaviour
 
         if (inputVector != Vector3.zero)
         {
-            currentMoveDirection = inputVector;
-
-            if (Camera.main != null)
-            {
-                Vector3 forward = Camera.main.transform.forward;
-                Vector3 right = Camera.main.transform.right;
-
-                forward.y = 0; right.y = 0;
-                forward.Normalize(); right.Normalize();
-
-                currentMoveDirection = forward * inputVector.z + right * inputVector.x;
-            }
-            
-            Quaternion targetRotation = Quaternion.LookRotation(currentMoveDirection);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 720f * Time.deltaTime);
+            currentMoveDirection = transform.right * inputVector.x + transform.forward * inputVector.z;
         }
     }
 
@@ -127,19 +164,28 @@ public class PlayerMovement : NetworkBehaviour
     {
         if (capsuleCollider == null) return;
 
+        float targetCamHeight = cameraDefaultHeight;
+
         if (isCrouching)
         {
             currentSpeed = crouchSpeed;
-            // Zmniejszamy Collider o połowę
-            capsuleCollider.height = Mathf.Lerp(capsuleCollider.height, defaultColliderHeight / 2f, 10f * Time.deltaTime);
-            capsuleCollider.center = new Vector3(capsuleCollider.center.x, Mathf.Lerp(capsuleCollider.center.y, defaultColliderCenterY / 2f, 10f * Time.deltaTime), capsuleCollider.center.z);
+            targetCamHeight = cameraCrouchHeight;
+            capsuleCollider.height = Mathf.Lerp(capsuleCollider.height, crouchColliderHeight, 10f * Time.deltaTime);
+            capsuleCollider.center = new Vector3(capsuleCollider.center.x, Mathf.Lerp(capsuleCollider.center.y, crouchColliderCenterY, 10f * Time.deltaTime), capsuleCollider.center.z);
         }
         else
         {
             currentSpeed = defaultSpeed;
-            // Przywracamy Collider
+            targetCamHeight = cameraDefaultHeight;
             capsuleCollider.height = Mathf.Lerp(capsuleCollider.height, defaultColliderHeight, 10f * Time.deltaTime);
             capsuleCollider.center = new Vector3(capsuleCollider.center.x, Mathf.Lerp(capsuleCollider.center.y, defaultColliderCenterY, 10f * Time.deltaTime), capsuleCollider.center.z);
+        }
+
+        if (playerCamera != null)
+        {
+            Vector3 camPos = playerCamera.transform.localPosition;
+            camPos.y = Mathf.Lerp(camPos.y, targetCamHeight, 10f * Time.deltaTime);
+            playerCamera.transform.localPosition = camPos;
         }
     }
 
@@ -152,7 +198,6 @@ public class PlayerMovement : NetworkBehaviour
         {
             animator.SetFloat("Speed", currentAnimationSpeed);
             animator.SetBool("IsCrouching", isCrouching);
-            // Usunięto odwołanie do IsGrounded
         }
     }
 
@@ -161,9 +206,6 @@ public class PlayerMovement : NetworkBehaviour
         if (!IsOwner || rb == null) return;
         
         Vector3 targetVelocity = currentMoveDirection * currentSpeed;
-        
-        // Zastosowanie ruchu w osi X i Z, a grawitację (i skok) zostawiamy w osi Y
-        // Używamy linearVelocity zgodnie z nowszym API Unity
         rb.linearVelocity = new Vector3(targetVelocity.x, rb.linearVelocity.y, targetVelocity.z);
     }
 }
