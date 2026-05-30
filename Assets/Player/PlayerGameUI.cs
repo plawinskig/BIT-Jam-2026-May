@@ -7,6 +7,8 @@ public class PlayerGameUI : NetworkBehaviour
     [Header("UI Elements")]
     public GameObject uiCanvas;
     public Text timerText;
+    public GameObject timerContainer; // Kontener timera (np. przycisk lub tło), żeby ukryć go w całości
+
     
     [Header("Death Screen")]
     public GameObject deathPanel;
@@ -14,6 +16,11 @@ public class PlayerGameUI : NetworkBehaviour
     
     [Header("Timeout Screen")]
     public GameObject timeoutPanel;
+
+    [Header("Sounds")]
+    public AudioClip gameOverSound;
+    public AudioClip winSound;
+    private AudioSource audioSource;
 
     private PlayerHealth playerHealth;
 
@@ -29,10 +36,13 @@ public class PlayerGameUI : NetworkBehaviour
             playerHealth = GetComponent<PlayerHealth>();
             if (playerHealth != null)
             {
-                playerHealth.OnDeathStateChanged += HandleDeathUI;
+                playerHealth.OnDeathStateChanged += OnDeathStateChangedHandler;
                 
-                // Inicjalizacja obecnego stanu
-                HandleDeathUI(playerHealth.isDead.Value, playerHealth.deathReason.Value.ToString());
+                audioSource = GetComponent<AudioSource>();
+                if (audioSource == null) audioSource = gameObject.AddComponent<AudioSource>();
+                
+                // Inicjalizacja obecnego stanu bez odtwarzania dźwięku
+                HandleDeathUI(playerHealth.isDead.Value, playerHealth.deathReason.Value.ToString(), true);
             }
         }
         else
@@ -45,8 +55,13 @@ public class PlayerGameUI : NetworkBehaviour
     {
         if (IsOwner && playerHealth != null)
         {
-            playerHealth.OnDeathStateChanged -= HandleDeathUI;
+            playerHealth.OnDeathStateChanged -= OnDeathStateChangedHandler;
         }
+    }
+
+    private void OnDeathStateChangedHandler(bool isDead, string reason)
+    {
+        HandleDeathUI(isDead, reason, false);
     }
 
     private void Update()
@@ -58,6 +73,11 @@ public class PlayerGameUI : NetworkBehaviour
         {
             if (!timerText.gameObject.activeSelf) timerText.gameObject.SetActive(true);
             
+            if (timerContainer != null && !timerContainer.activeSelf) 
+                timerContainer.SetActive(true);
+            else if (timerContainer == null && timerText.transform.parent != null && timerText.transform.parent != uiCanvas.transform)
+                timerText.transform.parent.gameObject.SetActive(true);
+            
             float time = GameTimer.Instance.timeRemaining.Value;
             int minutes = Mathf.FloorToInt(time / 60F);
             int seconds = Mathf.FloorToInt(time - minutes * 60);
@@ -67,10 +87,16 @@ public class PlayerGameUI : NetworkBehaviour
         {
             // Ukrywamy tekst timera, jeśli nie ma na scenie żadnego GameTimera (np. w MainMenu)
             timerText.gameObject.SetActive(false);
+            
+            // Ukrywamy również tło / przycisk
+            if (timerContainer != null) 
+                timerContainer.SetActive(false);
+            else if (timerText.transform.parent != null && timerText.transform.parent != uiCanvas.transform)
+                timerText.transform.parent.gameObject.SetActive(false);
         }
     }
 
-    private void HandleDeathUI(bool isDead, string reason)
+    private void HandleDeathUI(bool isDead, string reason, bool isInit = false)
     {
         bool isTimeout = (reason == "Koniec czasu!");
 
@@ -94,6 +120,19 @@ public class PlayerGameUI : NetworkBehaviour
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+            
+            // Odtwarzanie dźwięku tylko jeśli to nie jest inicjalizacja
+            if (!isInit && audioSource != null)
+            {
+                if (isTimeout && winSound != null)
+                {
+                    audioSource.PlayOneShot(winSound);
+                }
+                else if (!isTimeout && gameOverSound != null)
+                {
+                    audioSource.PlayOneShot(gameOverSound);
+                }
+            }
         }
         else
         {
