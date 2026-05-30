@@ -38,6 +38,11 @@ public class ObstacleSpawner : MonoBehaviour
 
     void Update()
     {
+        if (Unity.Netcode.NetworkManager.Singleton == null || !Unity.Netcode.NetworkManager.Singleton.IsServer)
+        {
+            return;
+        }
+
         // 1. Sprawdzanie czy Timer istnieje
         if (GameTimer.Instance == null)
         {
@@ -180,12 +185,12 @@ public class ObstacleSpawner : MonoBehaviour
             Debug.Log($"[Spawner] Zespawnowano: {selectedPrefab.name} | Miejsce: {posInfo} | Oczekiwany odstęp: {currentTier.spawnInterval}s");
         }
 
-        // spawnedObstacle.GetComponent<Unity.Netcode.NetworkObject>().Spawn();
+        spawnedObstacle.GetComponent<Unity.Netcode.NetworkObject>().Spawn();
 
         ObstacleMovement liveMovement = spawnedObstacle.GetComponent<ObstacleMovement>();
         if (liveMovement != null)
         {
-            liveMovement.direction = moveDirection;
+            liveMovement.direction.Value = moveDirection;
         }
     }
 

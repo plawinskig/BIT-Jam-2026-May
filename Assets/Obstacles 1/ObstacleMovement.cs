@@ -1,28 +1,39 @@
 using UnityEngine;
+using Unity.Netcode;
 
-public class ObstacleMovement : MonoBehaviour
+public class ObstacleMovement : NetworkBehaviour
 {
     public float speed = 5f;
-    public Vector3 direction = Vector3.back; 
     public float lifeTime = 10f;
 
-    [Header("Ustawienia Spawnowania")]
-    [Tooltip("O ile przesunąć obiekt w górę/dół względem spawnera")]
-    public float heightOffset = 0f; 
-    
-    [Tooltip("O ile zmniejszyć zakres lewo/prawo")]
-    public float horizontalPadding = 0f; 
+    // Zmienna sieciowa - wszyscy gracze odczytają poprawny kierunek z serwera
+    public NetworkVariable<Vector3> direction = new NetworkVariable<Vector3>(Vector3.back);
 
-    [Tooltip("ZAZNACZ TO, jeśli to duża przeszkoda na cały pokój. Zostanie stworzona idealnie na środku.")]
+    [Header("Ustawienia Spawnowania")]
+    public float heightOffset = 0f; 
+    public float horizontalPadding = 0f; 
     public bool forceCenterSpawn = false; 
 
-    void Start()
+    public override void OnNetworkSpawn()
     {
-        Destroy(gameObject, lifeTime);
+        // Tylko serwer odlicza czas do zniszczenia przeszkody
+        if (IsServer)
+        {
+            Invoke(nameof(DespawnObstacle), lifeTime);
+        }
+    }
+
+    private void DespawnObstacle()
+    {
+        if (NetworkObject.IsSpawned)
+        {
+            NetworkObject.Despawn(true); // Usuwa przeszkodę u wszystkich graczy
+        }
     }
 
     void Update()
     {
-        transform.Translate(direction * speed * Time.deltaTime, Space.World);
+        // Poruszamy się używając zsynchronizowanej wartości kierunku (.Value)
+        transform.Translate(direction.Value * speed * Time.deltaTime, Space.World);
     }
 }
