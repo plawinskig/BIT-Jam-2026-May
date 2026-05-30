@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2522814596386918182}
   - component: {fileID: -3374968315416664583}
-  m_Layer: 0
+  - component: {fileID: -3510592512603178875}
+  m_Layer: 6
   m_Name: SpikesFixed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50,6 +51,27 @@ MonoBehaviour:
   lifeTime: 10
   heightOffset: 1.5
   horizontalPadding: 1.4
+--- !u!65 &-3510592512603178875
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7242843709273217271}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &8538187715161239337
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -58,9 +80,33 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2522814596386918182}
     m_Modifications:
+    - target: {fileID: 237883596016242429, guid: f5b95d7dded826945a76dbc2906725cc, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 425241666381852517, guid: f5b95d7dded826945a76dbc2906725cc, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1184931949153577205, guid: f5b95d7dded826945a76dbc2906725cc, type: 3}
       propertyPath: m_Name
       value: Spikes
+      objectReference: {fileID: 0}
+    - target: {fileID: 1184931949153577205, guid: f5b95d7dded826945a76dbc2906725cc, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1640199766471204704, guid: f5b95d7dded826945a76dbc2906725cc, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2942596670188022075, guid: f5b95d7dded826945a76dbc2906725cc, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3196308671319612001, guid: f5b95d7dded826945a76dbc2906725cc, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6144663186326978807, guid: f5b95d7dded826945a76dbc2906725cc, type: 3}
       propertyPath: m_LocalPosition.x
