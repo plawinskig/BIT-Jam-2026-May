@@ -25,7 +25,6 @@ public class PlayerHealth : NetworkBehaviour
             HandleDeathChange(isDead.Value, newValue.ToString());
         };
         
-        // Inicjalizacja dla spóźnionych graczy
         if (isDead.Value)
         {
             HandleDeathChange(true, deathReason.Value.ToString());
@@ -47,9 +46,8 @@ public class PlayerHealth : NetworkBehaviour
     [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     public void DieRpc(string reason)
     {
-        if (isDead.Value) return; // Już martwy
+        if (isDead.Value) return;
 
-        // Zmiana kolejności: najpierw powód, potem flaga śmierci
         deathReason.Value = reason;
         isDead.Value = true;
         
@@ -66,9 +64,19 @@ public class PlayerHealth : NetworkBehaviour
     [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     public void RestartLevelRpc()
     {
+        Debug.Log($"[PlayerHealth] Otrzymano żądanie Restartu od klienta na serwerze! (IsServer={IsServer})");
         if (IsServer)
         {
+            foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
+            {
+                if (client.PlayerObject != null)
+                {
+                    client.PlayerObject.Despawn(true);
+                }
+            }
+
             string currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+            Debug.Log($"[PlayerHealth] Serwer ładuje scenę: {currentScene}");
             NetworkManager.Singleton.SceneManager.LoadScene(currentScene, UnityEngine.SceneManagement.LoadSceneMode.Single);
         }
     }
@@ -76,9 +84,18 @@ public class PlayerHealth : NetworkBehaviour
     [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     public void ReturnToMenuRpc(string menuSceneName = "MainMenu")
     {
+        Debug.Log($"[PlayerHealth] Otrzymano żądanie Powrotu do Menu od klienta na serwerze! (IsServer={IsServer})");
         if (IsServer)
         {
-            // Zmień "MainMenu" na nazwę swojej sceny menu, jeśli jest inna.
+            foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
+            {
+                if (client.PlayerObject != null)
+                {
+                    client.PlayerObject.Despawn(true);
+                }
+            }
+
+            Debug.Log($"[PlayerHealth] Serwer ładuje scenę: {menuSceneName}");
             NetworkManager.Singleton.SceneManager.LoadScene(menuSceneName, UnityEngine.SceneManagement.LoadSceneMode.Single);
         }
     }
@@ -87,7 +104,6 @@ public class PlayerHealth : NetworkBehaviour
     {
         OnDeathStateChanged?.Invoke(dead, reason);
 
-        // Zablokuj ruch, jeśli gracz jest martwy
         var movement = GetComponent<PlayerMovement>();
         if (movement != null)
         {

@@ -11,7 +11,7 @@ public class PlayerMovement : NetworkBehaviour
 
     [Header("Look Settings")]
     public float mouseSensitivity = 0.1f;
-    public Camera playerCamera; // Nasza kamera wewnątrz prefaba
+    public Camera playerCamera;
     private float verticalLookRotation = 0f;
 
     [Header("Animation")]
@@ -23,7 +23,6 @@ public class PlayerMovement : NetworkBehaviour
     private Vector3 currentMoveDirection;
     private float currentSpeed;
 
-    // Zmienne stanu i kolizji
     private bool isGrounded;
     private bool isCrouching;
     private float defaultColliderHeight;
@@ -31,7 +30,6 @@ public class PlayerMovement : NetworkBehaviour
     private float crouchColliderHeight;
     private float crouchColliderCenterY;
 
-    // Pozycje kamery
     private float cameraDefaultHeight;
     private float cameraCrouchHeight;
 
@@ -39,10 +37,8 @@ public class PlayerMovement : NetworkBehaviour
     {
         if (IsOwner)
         {
-            // Przesunięcie gracza o 3 jednostki Y wyżej
             transform.position += new Vector3(0, 3f, 0);
 
-            // Jako właściciel - mamy widok z tej kamery i ukrywamy kursor
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
 
@@ -51,8 +47,6 @@ public class PlayerMovement : NetworkBehaviour
                 playerCamera.gameObject.SetActive(true);
             }
 
-            // Ukrywamy własne ciało przed naszą kamerą (aby nie zasłaniało widoku),
-            // ale zostawiamy rzucanie cieni! Inni gracze będą widzieć nas normalnie.
             Renderer[] renderers = GetComponentsInChildren<Renderer>();
             foreach (Renderer r in renderers)
             {
@@ -61,7 +55,6 @@ public class PlayerMovement : NetworkBehaviour
         }
         else
         {
-            // Z wyłączamy kamerę u "klonów" innych graczy, by nie przejmowały ekranu
             if (playerCamera != null)
             {
                 playerCamera.gameObject.SetActive(false);
@@ -72,7 +65,6 @@ public class PlayerMovement : NetworkBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        // Zamrożenie rotacji fizyki, aby postać nie obracała się przy ocieraniu o ściany
         rb.constraints = RigidbodyConstraints.FreezeRotation;
 
         capsuleCollider = GetComponent<CapsuleCollider>();
@@ -87,11 +79,9 @@ public class PlayerMovement : NetworkBehaviour
             crouchColliderCenterY = defaultColliderCenterY - (defaultColliderHeight / 4f);
         }
 
-        // Zapisujemy pozycję startową kamery jako default, abyś mógł ją ustawić w Edytorze tak jak Ci wygodnie
         if (playerCamera != null)
         {
             cameraDefaultHeight = playerCamera.transform.localPosition.y;
-            // Podczas kucania opuszczamy kamerę o połowę różnicy wysokości kolajdera
             cameraCrouchHeight = cameraDefaultHeight - (crouchColliderHeight / 2f);
         }
         
