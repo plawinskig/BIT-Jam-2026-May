@@ -1903,6 +1903,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: ObstacleSpawner
       objectReference: {fileID: 0}
+    - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'obstaclePrefabs.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2601128114473778796, guid: fa557c34bafe0a441b23478f48b07e12, type: 3}
+    - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'obstaclePrefabs.Array.data[3]'
+      value: 
+      objectReference: {fileID: 6948773972098551308, guid: eeb3c995fd5d28249bb9cac68c39e2dd, type: 3}
     - target: {fileID: 7409168358931556777, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1943,6 +1951,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: obstaclePrefabs.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'obstaclePrefabs.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2601128114473778796, guid: fa557c34bafe0a441b23478f48b07e12, type: 3}
+    - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'obstaclePrefabs.Array.data[3]'
+      value: 
+      objectReference: {fileID: 6948773972098551308, guid: eeb3c995fd5d28249bb9cac68c39e2dd, type: 3}
+    - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'obstaclePrefabs.Array.data[4]'
+      value: 
+      objectReference: {fileID: 6948773972098551308, guid: ff4f1384bc0a8ed4d9b39231a3b73738, type: 3}
+    - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'obstaclePrefabs.Array.data[5]'
+      value: 
+      objectReference: {fileID: 6948773972098551308, guid: ff4f1384bc0a8ed4d9b39231a3b73738, type: 3}
+    - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'obstaclePrefabs.Array.data[6]'
+      value: 
+      objectReference: {fileID: 6948773972098551308, guid: ff4f1384bc0a8ed4d9b39231a3b73738, type: 3}
+    - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'obstaclePrefabs.Array.data[7]'
+      value: 
+      objectReference: {fileID: 6948773972098551308, guid: ff4f1384bc0a8ed4d9b39231a3b73738, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
