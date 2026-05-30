@@ -1904,6 +1904,10 @@ PrefabInstance:
       value: ObstacleSpawner
       objectReference: {fileID: 0}
     - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: difficultyTiers.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
       propertyPath: 'obstaclePrefabs.Array.data[2]'
       value: 
       objectReference: {fileID: 2601128114473778796, guid: fa557c34bafe0a441b23478f48b07e12, type: 3}
@@ -1911,6 +1915,138 @@ PrefabInstance:
       propertyPath: 'obstaclePrefabs.Array.data[3]'
       value: 
       objectReference: {fileID: 6948773972098551308, guid: eeb3c995fd5d28249bb9cac68c39e2dd, type: 3}
+    - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: difficultyTiers.Array.data[0].spawnInterval
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: difficultyTiers.Array.data[1].spawnInterval
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: difficultyTiers.Array.data[2].spawnInterval
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: difficultyTiers.Array.data[3].spawnInterval
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: difficultyTiers.Array.data[4].spawnInterval
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: difficultyTiers.Array.data[5].spawnInterval
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: difficultyTiers.Array.data[0].activateWhenTimeBelow
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: difficultyTiers.Array.data[1].activateWhenTimeBelow
+      value: 270
+      objectReference: {fileID: 0}
+    - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: difficultyTiers.Array.data[2].activateWhenTimeBelow
+      value: 240
+      objectReference: {fileID: 0}
+    - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: difficultyTiers.Array.data[3].activateWhenTimeBelow
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: difficultyTiers.Array.data[4].activateWhenTimeBelow
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: difficultyTiers.Array.data[5].activateWhenTimeBelow
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: difficultyTiers.Array.data[0].obstaclePrefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: difficultyTiers.Array.data[1].obstaclePrefabs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: difficultyTiers.Array.data[2].obstaclePrefabs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: difficultyTiers.Array.data[3].obstaclePrefabs.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: difficultyTiers.Array.data[4].obstaclePrefabs.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: difficultyTiers.Array.data[5].obstaclePrefabs.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'difficultyTiers.Array.data[0].obstaclePrefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 7242843709273217271, guid: a05b19d49935fcf48b7876933fd30d5b, type: 3}
+    - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'difficultyTiers.Array.data[1].obstaclePrefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 7242843709273217271, guid: a05b19d49935fcf48b7876933fd30d5b, type: 3}
+    - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'difficultyTiers.Array.data[1].obstaclePrefabs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2601128114473778796, guid: fa557c34bafe0a441b23478f48b07e12, type: 3}
+    - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'difficultyTiers.Array.data[2].obstaclePrefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 7242843709273217271, guid: a05b19d49935fcf48b7876933fd30d5b, type: 3}
+    - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'difficultyTiers.Array.data[2].obstaclePrefabs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2601128114473778796, guid: fa557c34bafe0a441b23478f48b07e12, type: 3}
+    - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'difficultyTiers.Array.data[2].obstaclePrefabs.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8989477824438362758, guid: 11f9ea3eeb4b36e449ce00286b9c76e1, type: 3}
+    - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'difficultyTiers.Array.data[3].obstaclePrefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 7242843709273217271, guid: a05b19d49935fcf48b7876933fd30d5b, type: 3}
+    - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'difficultyTiers.Array.data[3].obstaclePrefabs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2601128114473778796, guid: fa557c34bafe0a441b23478f48b07e12, type: 3}
+    - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'difficultyTiers.Array.data[3].obstaclePrefabs.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8989477824438362758, guid: 11f9ea3eeb4b36e449ce00286b9c76e1, type: 3}
+    - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'difficultyTiers.Array.data[3].obstaclePrefabs.Array.data[3]'
+      value: 
+      objectReference: {fileID: 6948773972098551308, guid: eeb3c995fd5d28249bb9cac68c39e2dd, type: 3}
+    - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'difficultyTiers.Array.data[4].obstaclePrefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 7242843709273217271, guid: a05b19d49935fcf48b7876933fd30d5b, type: 3}
+    - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'difficultyTiers.Array.data[4].obstaclePrefabs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2601128114473778796, guid: fa557c34bafe0a441b23478f48b07e12, type: 3}
+    - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'difficultyTiers.Array.data[4].obstaclePrefabs.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8989477824438362758, guid: 11f9ea3eeb4b36e449ce00286b9c76e1, type: 3}
+    - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'difficultyTiers.Array.data[4].obstaclePrefabs.Array.data[3]'
+      value: 
+      objectReference: {fileID: 6948773972098551308, guid: eeb3c995fd5d28249bb9cac68c39e2dd, type: 3}
+    - target: {fileID: 3026442715544365772, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'difficultyTiers.Array.data[4].obstaclePrefabs.Array.data[4]'
+      value: 
+      objectReference: {fileID: 6931258787736819433, guid: 8f3018684013aa1439d8f37e69f47d1c, type: 3}
     - target: {fileID: 7409168358931556777, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1953,7 +2089,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
       propertyPath: difficultyTiers.Array.size
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
       propertyPath: obstaclePrefabs.Array.size
@@ -1985,27 +2121,51 @@ PrefabInstance:
       objectReference: {fileID: 6948773972098551308, guid: ff4f1384bc0a8ed4d9b39231a3b73738, type: 3}
     - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
       propertyPath: difficultyTiers.Array.data[0].spawnInterval
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
       propertyPath: difficultyTiers.Array.data[1].spawnInterval
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
       propertyPath: difficultyTiers.Array.data[2].spawnInterval
-      value: 1.5
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: difficultyTiers.Array.data[3].spawnInterval
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: difficultyTiers.Array.data[4].spawnInterval
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: difficultyTiers.Array.data[5].spawnInterval
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
       propertyPath: difficultyTiers.Array.data[0].activateWhenTimeBelow
-      value: 600
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
       propertyPath: difficultyTiers.Array.data[1].activateWhenTimeBelow
-      value: 570
+      value: 295
       objectReference: {fileID: 0}
     - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
       propertyPath: difficultyTiers.Array.data[2].activateWhenTimeBelow
-      value: 540
+      value: 290
+      objectReference: {fileID: 0}
+    - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: difficultyTiers.Array.data[3].activateWhenTimeBelow
+      value: 285
+      objectReference: {fileID: 0}
+    - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: difficultyTiers.Array.data[4].activateWhenTimeBelow
+      value: 280
+      objectReference: {fileID: 0}
+    - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: difficultyTiers.Array.data[5].activateWhenTimeBelow
+      value: 2137
       objectReference: {fileID: 0}
     - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
       propertyPath: difficultyTiers.Array.data[0].obstaclePrefabs.Array.size
@@ -2020,13 +2180,25 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: difficultyTiers.Array.data[3].obstaclePrefabs.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: difficultyTiers.Array.data[4].obstaclePrefabs.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: difficultyTiers.Array.data[5].obstaclePrefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
       propertyPath: 'difficultyTiers.Array.data[0].obstaclePrefabs.Array.data[0]'
       value: 
-      objectReference: {fileID: 1184931949153577205, guid: f5b95d7dded826945a76dbc2906725cc, type: 3}
+      objectReference: {fileID: 7242843709273217271, guid: a05b19d49935fcf48b7876933fd30d5b, type: 3}
     - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
       propertyPath: 'difficultyTiers.Array.data[1].obstaclePrefabs.Array.data[0]'
       value: 
-      objectReference: {fileID: 1184931949153577205, guid: f5b95d7dded826945a76dbc2906725cc, type: 3}
+      objectReference: {fileID: 7242843709273217271, guid: a05b19d49935fcf48b7876933fd30d5b, type: 3}
     - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
       propertyPath: 'difficultyTiers.Array.data[1].obstaclePrefabs.Array.data[1]'
       value: 
@@ -2034,7 +2206,7 @@ PrefabInstance:
     - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
       propertyPath: 'difficultyTiers.Array.data[2].obstaclePrefabs.Array.data[0]'
       value: 
-      objectReference: {fileID: 1184931949153577205, guid: f5b95d7dded826945a76dbc2906725cc, type: 3}
+      objectReference: {fileID: 7242843709273217271, guid: a05b19d49935fcf48b7876933fd30d5b, type: 3}
     - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
       propertyPath: 'difficultyTiers.Array.data[2].obstaclePrefabs.Array.data[1]'
       value: 
@@ -2043,6 +2215,62 @@ PrefabInstance:
       propertyPath: 'difficultyTiers.Array.data[2].obstaclePrefabs.Array.data[2]'
       value: 
       objectReference: {fileID: 8989477824438362758, guid: 11f9ea3eeb4b36e449ce00286b9c76e1, type: 3}
+    - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'difficultyTiers.Array.data[3].obstaclePrefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 7242843709273217271, guid: a05b19d49935fcf48b7876933fd30d5b, type: 3}
+    - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'difficultyTiers.Array.data[3].obstaclePrefabs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2601128114473778796, guid: fa557c34bafe0a441b23478f48b07e12, type: 3}
+    - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'difficultyTiers.Array.data[3].obstaclePrefabs.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8989477824438362758, guid: 11f9ea3eeb4b36e449ce00286b9c76e1, type: 3}
+    - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'difficultyTiers.Array.data[3].obstaclePrefabs.Array.data[3]'
+      value: 
+      objectReference: {fileID: 6948773972098551308, guid: eeb3c995fd5d28249bb9cac68c39e2dd, type: 3}
+    - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'difficultyTiers.Array.data[4].obstaclePrefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 7242843709273217271, guid: a05b19d49935fcf48b7876933fd30d5b, type: 3}
+    - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'difficultyTiers.Array.data[4].obstaclePrefabs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2601128114473778796, guid: fa557c34bafe0a441b23478f48b07e12, type: 3}
+    - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'difficultyTiers.Array.data[4].obstaclePrefabs.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8989477824438362758, guid: 11f9ea3eeb4b36e449ce00286b9c76e1, type: 3}
+    - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'difficultyTiers.Array.data[4].obstaclePrefabs.Array.data[3]'
+      value: 
+      objectReference: {fileID: 6948773972098551308, guid: eeb3c995fd5d28249bb9cac68c39e2dd, type: 3}
+    - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'difficultyTiers.Array.data[4].obstaclePrefabs.Array.data[4]'
+      value: 
+      objectReference: {fileID: 6931258787736819433, guid: 8f3018684013aa1439d8f37e69f47d1c, type: 3}
+    - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'difficultyTiers.Array.data[5].obstaclePrefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 6931258787736819433, guid: 8f3018684013aa1439d8f37e69f47d1c, type: 3}
+    - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'difficultyTiers.Array.data[5].obstaclePrefabs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 6931258787736819433, guid: 8f3018684013aa1439d8f37e69f47d1c, type: 3}
+    - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'difficultyTiers.Array.data[5].obstaclePrefabs.Array.data[2]'
+      value: 
+      objectReference: {fileID: 6931258787736819433, guid: 8f3018684013aa1439d8f37e69f47d1c, type: 3}
+    - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'difficultyTiers.Array.data[5].obstaclePrefabs.Array.data[3]'
+      value: 
+      objectReference: {fileID: 6931258787736819433, guid: 8f3018684013aa1439d8f37e69f47d1c, type: 3}
+    - target: {fileID: 7952097622545605103, guid: 4dda780943e314040a2e5949451d8ac0, type: 3}
+      propertyPath: 'difficultyTiers.Array.data[5].obstaclePrefabs.Array.data[4]'
+      value: 
+      objectReference: {fileID: 6931258787736819433, guid: 8f3018684013aa1439d8f37e69f47d1c, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6734,7 +6962,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameTimer
   ShowTopMostFoldoutHeaderGroup: 1
-  defaultTime: 600
+  defaultTime: 300
   timeRemaining:
     UpdateTraits:
       MinSecondsBetweenUpdates: 0
