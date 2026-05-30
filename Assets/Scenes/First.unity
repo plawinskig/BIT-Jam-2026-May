@@ -5783,9 +5783,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1833015594}
+  - component: {fileID: 1833015595}
   - component: {fileID: 1833015597}
   - component: {fileID: 1833015596}
-  - component: {fileID: 1833015595}
   m_Layer: 0
   m_Name: GameTimer
   m_TagString: Untagged

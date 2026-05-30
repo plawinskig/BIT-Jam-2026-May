@@ -1,58 +1,98 @@
 using UnityEngine;
 
+[System.Serializable]
+public class DifficultyTier
+{
+    [Tooltip("Czas na liczniku, poniżej którego włącza się ten poziom (np. 600, 450, 300)")]
+    public float activateWhenTimeBelow;
+    
+    [Tooltip("Co ile sekund spawnują się obiekty na tym poziomie?")]
+    public float spawnInterval = 2f;
+    
+    [Tooltip("Przeszkody dostępne dla tego poziomu trudności")]
+    public GameObject[] obstaclePrefabs;
+}
+
 public class ObstacleSpawner : MonoBehaviour
 {
-    public GameObject[] obstaclePrefabs; 
-    public float spawnInterval = 2f;     
+    [Header("Poziomy Trudności (UŁÓŻ OD NAJWIĘKSZEGO CZASU DO NAJMNIEJSZEGO)")]
+    public DifficultyTier[] difficultyTiers; 
 
     [Header("Zakres bazowy pokoju (Oś X)")]
     public float minX = -15f;             
     public float maxX = 15f;              
 
     [Header("Kierunek Ruchu Przeszkód")]
-    [Tooltip("W którą stronę osi Z mają lecieć przeszkody z tego spawnera. Np. (0,0,-1) lub (0,0,1)")]
     public Vector3 moveDirection = Vector3.back; 
-
-    [Header("Dostosowanie Rotacji")]
-    [Tooltip("Dodatkowa rotacja dla pojawiającej się przeszkody (w stopniach)")]
-    public Vector3 spawnRotationOffset = new Vector3(0, 180, 0); // Domyślnie obracamy o 180 stopni w osi Y
+    public Vector3 spawnRotationOffset = new Vector3(0, 180, 0); 
 
     [Header("Tryb Testowy")]
     public bool testBoundariesMode = false;
 
     private float timer;
     private bool spawnOnLeft = true; 
+    private DifficultyTier currentTier;
 
     void Update()
     {
+        if (GameTimer.Instance == null || !GameTimer.Instance.isTimerRunning.Value)
+        {
+            return;
+        }
+
+        float timeRemaining = GameTimer.Instance.timeRemaining.Value;
+        
+        UpdateDifficultyTier(timeRemaining);
+
+        if (currentTier == null || currentTier.obstaclePrefabs.Length == 0)
+        {
+             return;
+        }
+
         timer += Time.deltaTime;
 
-        if (timer >= spawnInterval)
+        if (timer >= currentTier.spawnInterval)
         {
             SpawnObstacle();
             timer = 0f;
         }
     }
 
+    void UpdateDifficultyTier(float timeRemaining)
+    {
+        foreach (var tier in difficultyTiers)
+        {
+            if (timeRemaining <= tier.activateWhenTimeBelow)
+            {
+                currentTier = tier;
+            }
+        }
+    }
+
     void SpawnObstacle()
     {
-        if (obstaclePrefabs.Length == 0) return;
-
-        int randomIndex = Random.Range(0, obstaclePrefabs.Length);
-        GameObject selectedPrefab = obstaclePrefabs[randomIndex];
+        int randomIndex = Random.Range(0, currentTier.obstaclePrefabs.Length);
+        GameObject selectedPrefab = currentTier.obstaclePrefabs[randomIndex];
 
         ObstacleMovement prefabSettings = selectedPrefab.GetComponent<ObstacleMovement>();
         float padding = 0f;
         float yOffset = 0f;
+        bool centerSpawn = false;
 
         if (prefabSettings != null)
         {
             padding = prefabSettings.horizontalPadding;
             yOffset = prefabSettings.heightOffset;
+            centerSpawn = prefabSettings.forceCenterSpawn;
         }
 
         float finalX;
-        if (testBoundariesMode)
+        
+        if (centerSpawn)
+        {
+            finalX = (minX + maxX) / 2f; 
+        }
+        else if (testBoundariesMode)
         {
             finalX = spawnOnLeft ? (minX + padding) : (maxX - padding);
             spawnOnLeft = !spawnOnLeft; 
@@ -65,17 +105,15 @@ public class ObstacleSpawner : MonoBehaviour
         float spawnY = transform.position.y + yOffset;
         Vector3 spawnPosition = new Vector3(finalX, spawnY, transform.position.z);
 
-        // --- OBLICZANIE ROTACJI ---
-        // Bierzemy rotację spawnera jako bazę
         Quaternion baseRotation = transform.rotation;
-        // Przekształcamy nasze Vector3 w stopniach na obiekt Quaternion (format rotacji Unity)
         Quaternion extraRotation = Quaternion.Euler(spawnRotationOffset);
-        // Łączymy rotacje (w Unity rotacje łączymy mnożąc je)
         Quaternion finalRotation = baseRotation * extraRotation;
-        // -------------------------
 
-        // TWORZYMY OBIEKT z połączoną rotacją
         GameObject spawnedObstacle = Instantiate(selectedPrefab, spawnPosition, finalRotation);
+
+        // UWAGA! Ponieważ widzę w kodzie, że robisz grę multiplayer (Netcode):
+        // Jeśli twoje przeszkody mają "NetworkObject" i mają być przesyłane przez sieć, odkomentuj linijkę niżej:
+        // spawnedObstacle.GetComponent<Unity.Netcode.NetworkObject>().Spawn();
 
         ObstacleMovement liveMovement = spawnedObstacle.GetComponent<ObstacleMovement>();
         if (liveMovement != null)
