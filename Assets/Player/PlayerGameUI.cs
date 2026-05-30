@@ -56,10 +56,17 @@ public class PlayerGameUI : NetworkBehaviour
         // Aktualizacja timera, jeśli istnieje instancja GameTimer
         if (GameTimer.Instance != null && timerText != null)
         {
+            if (!timerText.gameObject.activeSelf) timerText.gameObject.SetActive(true);
+            
             float time = GameTimer.Instance.timeRemaining.Value;
             int minutes = Mathf.FloorToInt(time / 60F);
             int seconds = Mathf.FloorToInt(time - minutes * 60);
             timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        }
+        else if (timerText != null && timerText.gameObject.activeSelf)
+        {
+            // Ukrywamy tekst timera, jeśli nie ma na scenie żadnego GameTimera (np. w MainMenu)
+            timerText.gameObject.SetActive(false);
         }
     }
 
@@ -98,18 +105,29 @@ public class PlayerGameUI : NetworkBehaviour
     // Dodane funkcje pod przyciski UI:
     public void OnRestartLevelButtonClicked()
     {
+        Debug.Log("[PlayerGameUI] Kliknięto Restart Level!");
         if (playerHealth != null)
         {
+            Debug.Log("[PlayerGameUI] Wysyłam żądanie Restartu do serwera...");
             playerHealth.RestartLevelRpc();
+        }
+        else
+        {
+            Debug.LogError("[PlayerGameUI] Brak referencji do PlayerHealth!");
         }
     }
 
     public void OnReturnToMenuButtonClicked()
     {
+        Debug.Log("[PlayerGameUI] Kliknięto Wróć do menu!");
         if (playerHealth != null)
         {
-            // Możesz zmienić nazwę "MainMenu", na właściwą dla twojego projektu.
+            Debug.Log("[PlayerGameUI] Wysyłam żądanie powrotu do Menu...");
             playerHealth.ReturnToMenuRpc("MainMenu");
+        }
+        else
+        {
+            Debug.LogError("[PlayerGameUI] Brak referencji do PlayerHealth!");
         }
     }
 }

@@ -49,12 +49,30 @@ public class NetworkPlayerSpawner : MonoBehaviour
         GameObject playerPrefab = NetworkManager.Singleton.NetworkConfig.PlayerPrefab;
         if (playerPrefab != null)
         {
-            GameObject playerInstance = Instantiate(playerPrefab);
+            // Szukamy punktów startowych na scenie (tag "Respawn")
+            GameObject[] spawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
+            Vector3 spawnPosition = Vector3.zero;
+            Quaternion spawnRotation = Quaternion.identity;
+
+            if (spawnPoints.Length > 0)
+            {
+                // Wybieramy punkt na podstawie ID klienta (klient 0 bierze punkt 0, klient 1 bierze punkt 1)
+                int index = (int)(clientId % (ulong)spawnPoints.Length);
+                spawnPosition = spawnPoints[index].transform.position;
+                spawnRotation = spawnPoints[index].transform.rotation;
+            }
+            else
+            {
+                Debug.LogWarning("[NetworkPlayerSpawner] Nie znaleziono obiektów z tagiem 'Respawn' na scenie. Spawnowanie w 0,0,0.");
+            }
+
+            // Tworzymy postać w odpowiednim miejscu
+            GameObject playerInstance = Instantiate(playerPrefab, spawnPosition, spawnRotation);
             NetworkObject netObj = playerInstance.GetComponent<NetworkObject>();
             if (netObj != null)
             {
                 netObj.SpawnAsPlayerObject(clientId, true);
-                Debug.Log($"[NetworkPlayerSpawner] Zespawnowano gracza {clientId} na scenie {SceneManager.GetActiveScene().name}");
+                Debug.Log($"[NetworkPlayerSpawner] Zespawnowano gracza {clientId} na scenie {SceneManager.GetActiveScene().name} w punkcie {spawnPosition}");
             }
         }
         else

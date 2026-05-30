@@ -66,9 +66,20 @@ public class PlayerHealth : NetworkBehaviour
     [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     public void RestartLevelRpc()
     {
+        Debug.Log($"[PlayerHealth] Otrzymano żądanie Restartu od klienta na serwerze! (IsServer={IsServer})");
         if (IsServer)
         {
+            // Niszczymy stare postacie przed przeładowaniem sceny, aby Spawner stworzył nowe, świeże na starcie
+            foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
+            {
+                if (client.PlayerObject != null)
+                {
+                    client.PlayerObject.Despawn(true);
+                }
+            }
+
             string currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+            Debug.Log($"[PlayerHealth] Serwer ładuje scenę: {currentScene}");
             NetworkManager.Singleton.SceneManager.LoadScene(currentScene, UnityEngine.SceneManagement.LoadSceneMode.Single);
         }
     }
@@ -76,8 +87,19 @@ public class PlayerHealth : NetworkBehaviour
     [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     public void ReturnToMenuRpc(string menuSceneName = "MainMenu")
     {
+        Debug.Log($"[PlayerHealth] Otrzymano żądanie Powrotu do Menu od klienta na serwerze! (IsServer={IsServer})");
         if (IsServer)
         {
+            // Niszczymy postacie, żeby nie przenieść się do Main Menu jako ludzik
+            foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
+            {
+                if (client.PlayerObject != null)
+                {
+                    client.PlayerObject.Despawn(true);
+                }
+            }
+
+            Debug.Log($"[PlayerHealth] Serwer ładuje scenę: {menuSceneName}");
             // Zmień "MainMenu" na nazwę swojej sceny menu, jeśli jest inna.
             NetworkManager.Singleton.SceneManager.LoadScene(menuSceneName, UnityEngine.SceneManagement.LoadSceneMode.Single);
         }
