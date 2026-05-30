@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 5668857997424279249}
   - component: {fileID: 2347352116625496656}
   - component: {fileID: 8822348945173727387}
+  - component: {fileID: -3114191605802270763}
   m_Layer: 6
   m_Name: Sphere
   m_TagString: Untagged
@@ -375,6 +376,18 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!114 &-3114191605802270763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 716808734477915880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f6ad861614e55c4daebd84b7c9425fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::gameOver
 --- !u!1 &5866199470787672500
 GameObject:
   m_ObjectHideFlags: 0
