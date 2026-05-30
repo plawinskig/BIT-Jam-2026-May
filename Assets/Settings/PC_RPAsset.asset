@@ -110,11 +110,7 @@ MonoBehaviour:
   m_PrefilterDebugKeywords: 1
   m_PrefilterWriteRenderingLayers: 1
   m_PrefilterHDROutput: 1
-<<<<<<< Updated upstream
   m_PrefilterAlphaOutput: 1
-=======
-  m_PrefilterAlphaOutput: 0
->>>>>>> Stashed changes
   m_PrefilterSSAODepthNormals: 0
   m_PrefilterSSAOSourceDepthLow: 1
   m_PrefilterSSAOSourceDepthMedium: 1
@@ -132,7 +128,6 @@ MonoBehaviour:
   m_PrefilterSoftShadowsQualityHigh: 1
   m_PrefilterSoftShadows: 0
   m_PrefilterScreenCoord: 1
-<<<<<<< Updated upstream
   m_PrefilterScreenSpaceIrradiance: 1
   m_PrefilterNativeRenderPass: 1
   m_PrefilterUseLegacyLightmaps: 0
@@ -142,17 +137,6 @@ MonoBehaviour:
   m_PrefilterReflectionProbeBoxProjection: 0
   m_PrefilterReflectionProbeAtlas: 0
   m_PrefilterPointSamplingUpsampling: 1
-=======
-  m_PrefilterScreenSpaceIrradiance: 0
-  m_PrefilterNativeRenderPass: 1
-  m_PrefilterUseLegacyLightmaps: 0
-  m_PrefilterBicubicLightmapSampling: 0
-  m_PrefilterReflectionProbeRotation: 0
-  m_PrefilterReflectionProbeBlending: 0
-  m_PrefilterReflectionProbeBoxProjection: 0
-  m_PrefilterReflectionProbeAtlas: 0
-  m_PrefilterPointSamplingUpsampling: 0
->>>>>>> Stashed changes
   m_ShaderVariantLogLevel: 0
   m_ShadowCascades: 0
   m_Textures:
