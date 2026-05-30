@@ -872,7 +872,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 116127710}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &116127713
 Camera:
   m_ObjectHideFlags: 0
@@ -3263,7 +3263,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705135606}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &705135609
 Camera:
   m_ObjectHideFlags: 0
@@ -5614,7 +5614,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1537857843}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &1537857845
 Camera:
   m_ObjectHideFlags: 0
@@ -6714,7 +6714,6 @@ GameObject:
   - component: {fileID: 2135145903}
   - component: {fileID: 2135145902}
   - component: {fileID: 2135145901}
-  - component: {fileID: 2135145900}
   m_Layer: 0
   m_Name: GameTimer
   m_TagString: Untagged
@@ -6722,30 +6721,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2135145900
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2135145899}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d09fb70560a13a64086c436a5d934df9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameTimer
-  ShowTopMostFoldoutHeaderGroup: 1
-  defaultTime: 600
-  timeRemaining:
-    UpdateTraits:
-      MinSecondsBetweenUpdates: 0
-      MaxSecondsBetweenUpdates: 0
-    m_InternalValue: 0
-  isTimerRunning:
-    UpdateTraits:
-      MinSecondsBetweenUpdates: 0
-      MaxSecondsBetweenUpdates: 0
-    m_InternalValue: 0
 --- !u!114 &2135145901
 MonoBehaviour:
   m_ObjectHideFlags: 0

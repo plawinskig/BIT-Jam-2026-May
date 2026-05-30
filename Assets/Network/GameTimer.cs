@@ -21,11 +21,25 @@ public class GameTimer : NetworkBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            Debug.Log($"<color=green>[GameTimer] Pomyślnie zainicjalizowano główną instancję na obiekcie: {gameObject.name}</color>");
         }
         else
         {
-            Destroy(gameObject);
+            // Zmieniamy na Destroy(this) zamiast gameObject, żeby w razie czego usunąć TYLKO skrypt, a nie cały obiekt!
+            Debug.LogError($"[GameTimer] WYKRYTO DUPLIKAT! Obiekt '{gameObject.name}' miał drugi skrypt GameTimer. Usuwam tylko zdublowany komponent.");
+            Destroy(this); 
         }
+    }
+
+    public override void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            Instance = null;
+            Debug.LogWarning($"[GameTimer] Zniszczono główną instancję na obiekcie '{gameObject.name}'.");
+        }
+        
+        base.OnDestroy(); 
     }
 
     public override void OnNetworkSpawn()
