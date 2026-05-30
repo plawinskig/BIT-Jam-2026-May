@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class MainMenuUI : MonoBehaviour
 {
@@ -23,16 +24,25 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private Button level1Button;
     [SerializeField] private string level1SceneName = "First";
     
-    [Tooltip("Możesz dodać więcej przycisków i dopisać je w kodzie na wzór level1Button")]
     [SerializeField] private Button level2Button;
     [SerializeField] private string level2SceneName = "Second";
 
+    [Header("Przyciski Powrotu")]
+    [Tooltip("Przycisk 'Anuluj' na ekranie oczekiwania")]
+    [SerializeField] private Button cancelWaitingButton;
+    [Tooltip("Przycisk 'Anuluj' na ekranie wyboru poziomu")]
+    [SerializeField] private Button cancelLevelSelectionButton;
+
+    private bool isGameStarted = false;
+
     private void Awake()
     {
-        // Ustawienie początkowe paneli
         ShowPanel(startPanel);
 
-        // --- AKCJE STARTU ---
+        // Ustawiamy Connection Approval ZANIM ktokolwiek uruchomi serwer lub klienta, 
+        // żeby uniknąć "NetworkConfig mismatch"
+        SetupConnectionApproval();
+
         if (hostButton != null)
         {
             hostButton.onClick.AddListener(() =>
@@ -40,7 +50,6 @@ public class MainMenuUI : MonoBehaviour
                 NetworkManager.Singleton.StartHost();
                 ShowPanel(waitingPanel);
                 
-                // Rejestrujemy się na event podłączenia kogoś do serwera
                 NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
             });
         }
@@ -51,30 +60,45 @@ public class MainMenuUI : MonoBehaviour
             {
                 NetworkManager.Singleton.StartClient();
                 ShowPanel(waitingPanel);
-                // Klient po prostu czeka aż Host zmieni mu scenę
             });
         }
 
-        if (quitButton != null)
-        {
-            quitButton.onClick.AddListener(() => Application.Quit());
-        }
+        if (quitButton != null) quitButton.onClick.AddListener(() => Application.Quit());
 
-        // --- AKCJE WYBORU POZIOMU ---
-        if (level1Button != null)
-        {
-            level1Button.onClick.AddListener(() => LoadLevel(level1SceneName));
-        }
+        if (level1Button != null) level1Button.onClick.AddListener(() => LoadLevel(level1SceneName));
+        if (level2Button != null) level2Button.onClick.AddListener(() => LoadLevel(level2SceneName));
         
-        if (level2Button != null)
+        // --- AKCJE POWROTU ---
+        if (cancelWaitingButton != null) cancelWaitingButton.onClick.AddListener(CancelAndReturn);
+        if (cancelLevelSelectionButton != null) cancelLevelSelectionButton.onClick.AddListener(CancelAndReturn);
+    }
+
+    private void CancelAndReturn()
+    {
+        // Odpinamy ewentualne eventy, bo przerywamy proces
+        NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
+        
+        // Zamykamy serwer/klienta (rozłączamy się)
+        NetworkManager.Singleton.Shutdown();
+        
+        // Wracamy do głównego panelu
+        ShowPanel(startPanel);
+    }
+
+    private void SetupConnectionApproval()
+    {
+        NetworkManager.Singleton.NetworkConfig.ConnectionApproval = true;
+        NetworkManager.Singleton.ConnectionApprovalCallback = (request, response) =>
         {
-            level2Button.onClick.AddListener(() => LoadLevel(level2SceneName));
-        }
+            response.Approved = true;
+            response.CreatePlayerObject = false; 
+            response.Position = Vector3.zero;
+            response.Rotation = Quaternion.identity;
+        };
     }
 
     private void OnDestroy()
     {
-        // Zawsze dobrym zwyczajem jest odpięcie eventów przy niszczeniu obiektu
         if (NetworkManager.Singleton != null)
         {
             NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
@@ -83,20 +107,23 @@ public class MainMenuUI : MonoBehaviour
 
     private void OnClientConnected(ulong clientId)
     {
-        // Sprawdzamy czy to nie my (Host) się właśnie podłączyliśmy
-        if (clientId != NetworkManager.Singleton.LocalClientId)
+        if (!NetworkManager.Singleton.IsServer) return;
+
+        if (!isGameStarted)
         {
-            // Podłączył się ktoś inny - zakładamy że to Gracz 2.
-            // Host może teraz wybrać poziom!
-            ShowPanel(levelSelectionPanel);
+            // Oczekujemy w Menu. Ktoś się podłączył (inny niż Host)
+            if (clientId != NetworkManager.Singleton.LocalClientId)
+            {
+                ShowPanel(levelSelectionPanel);
+            }
         }
     }
 
     private void LoadLevel(string sceneName)
     {
-        // Upewniamy się, że tylko serwer ładuje scenę dla wszystkich
         if (NetworkManager.Singleton.IsServer)
         {
+            isGameStarted = true;
             NetworkManager.Singleton.SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
         }
     }
@@ -106,10 +133,6 @@ public class MainMenuUI : MonoBehaviour
         if (startPanel != null) startPanel.SetActive(false);
         if (waitingPanel != null) waitingPanel.SetActive(false);
         if (levelSelectionPanel != null) levelSelectionPanel.SetActive(false);
-
-        if (panelToShow != null)
-        {
-            panelToShow.SetActive(true);
-        }
+        if (panelToShow != null) panelToShow.SetActive(true);
     }
 }
