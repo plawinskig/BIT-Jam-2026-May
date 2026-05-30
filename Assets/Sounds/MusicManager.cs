@@ -13,11 +13,10 @@ public class MusicManager : MonoBehaviour
 
     private void Awake()
     {
-        // Singleton pattern: upewniamy się, że istnieje tylko jeden MusicManager
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Nie niszcz przy zmianie sceny
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -25,14 +24,13 @@ public class MusicManager : MonoBehaviour
             return;
         }
 
-        // Tworzymy dwa źródła dźwięku (AudioSource) dla płynnego przejścia
         introSource = gameObject.AddComponent<AudioSource>();
         loopSource = gameObject.AddComponent<AudioSource>();
 
         introSource.playOnAwake = false;
         loopSource.playOnAwake = false;
         
-        loopSource.loop = true; // Drugi klip ma się powtarzać w nieskończoność
+        loopSource.loop = true;
     }
 
     private void Start()
@@ -48,20 +46,13 @@ public class MusicManager : MonoBehaviour
             return;
         }
 
-        // Ustawiamy klipy
         introSource.clip = introClip;
         loopSource.clip = loopClip;
 
-        // Pobieramy aktualny czas systemu audio w Unity (bardzo precyzyjny)
-        double startTime = AudioSettings.dspTime + 0.2; // dajemy mały bufor 0.2s na inicjalizację
-
-        // Obliczamy dokładny czas trwania intro na podstawie próbek (bardziej precyzyjne niż .length)
+        double startTime = AudioSettings.dspTime + 0.2;
         double introDuration = (double)introClip.samples / introClip.frequency;
 
-        // Planujemy odtworzenie intro
         introSource.PlayScheduled(startTime);
-
-        // Planujemy odtworzenie zapętlonego utworu idealnie (seamless) w momencie końca intro
         loopSource.PlayScheduled(startTime + introDuration);
     }
 }

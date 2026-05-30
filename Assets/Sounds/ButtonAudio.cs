@@ -21,15 +21,13 @@ public class ButtonAudio : MonoBehaviour
     {
         if (clickSound != null)
         {
-            // Tworzymy tymczasowy obiekt do odtworzenia dźwięku, aby nie przerwało go 
-            // zniszczenie lub wyłączenie przycisku (np. przy zmianie sceny)
             GameObject soundObj = new GameObject("ButtonClickSound");
             DontDestroyOnLoad(soundObj);
             
             AudioSource src = soundObj.AddComponent<AudioSource>();
             src.clip = clickSound;
-            src.spatialBlend = 0f; // Dźwięk 2D (nie zależy od pozycji kamery)
-            src.ignoreListenerPause = true; // Graj nawet gdy gra jest zapauzowana
+            src.spatialBlend = 0f;
+            src.ignoreListenerPause = true;
             src.Play();
             
             Destroy(soundObj, clickSound.length + 0.1f);
